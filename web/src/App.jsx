@@ -26,7 +26,7 @@ function AnimatedWord({ words, className = "" }) {
 
   return (
     <span 
-      className={`inline-block transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${isChinese ? 'font-chinese' : 'italic'}`}
+      className={`inline-block transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${isChinese ? 'font-chinese' : 'italic'} rounded-underline`}
       style={{ 
         transitionDuration: '600ms',
         fontFamily: isChinese ? 'Chinese' : undefined
@@ -64,7 +64,7 @@ function App() {
       {/* Navigation Bar */}
       <nav className="relative z-10 flex items-center justify-between w-full px-8 md:px-12 lg:px-20 pt-8 md:pt-10 lg:pt-12 pb-6 text-white">
         {/* Left: Menu */}
-        <button className="flex items-center gap-2 font-sans text-sm uppercase tracking-wider hover:opacity-80 transition-opacity">
+        <button className="flex items-center gap-2 font-inter text-sm uppercase tracking-wider hover:opacity-80 transition-opacity">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -81,7 +81,7 @@ function App() {
         </div>
 
         {/* Right: Links */}
-        <div className="flex items-center gap-6 font-sans text-sm uppercase tracking-wider">
+        <div className="flex items-center gap-6 font-inter text-sm uppercase tracking-wider">
           <a href="#" className="hover:opacity-80 transition-opacity">AVAILABILITY</a>
           <a href="#" className="hover:opacity-80 transition-opacity">CONTACT</a>
         </div>
@@ -94,7 +94,7 @@ function App() {
             Your All in One Guide to Learning 
             <br />
             <AnimatedWord 
-              words={['Mandarin', '中文', 'The most spoken language in the world', '普通话']} 
+              words={['Mandarin', '中文', 'The most spoken language in the world', '普通话', '国语', '汉语']} 
             />
           </h2>
         </div>

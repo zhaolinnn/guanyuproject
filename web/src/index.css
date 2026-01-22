@@ -52,4 +52,22 @@
   h2 span.font-chinese {
     font-family: 'Chinese', 'Inter', sans-serif !important;
   }
+  
+  /* Rounded underline */
+  .rounded-underline {
+    position: relative;
+    text-decoration: none;
+  }
+  
+  .rounded-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.25rem;
+    width: 100%;
+    height: 0.5rem;
+    background-color: #ef4444; /* red-500 */
+    border-radius: 9999px; /* fully rounded */
+    z-index: -1;
+  }
 }
