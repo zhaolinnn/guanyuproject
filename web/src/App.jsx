@@ -1,3 +1,42 @@
+import { useState, useEffect } from 'react'
+
+// Function to detect if text contains Chinese characters
+function hasChinese(text) {
+  return /[\u4e00-\u9fff]/.test(text)
+}
+
+function AnimatedWord({ words, className = "" }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false)
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length)
+        setIsVisible(true)
+      }, 300) // Half of transition duration
+    }, 3000) // Change word every 3 seconds
+
+    return () => clearInterval(interval)
+  }, [words.length])
+
+  const currentWord = words[currentIndex]
+  const isChinese = hasChinese(currentWord)
+
+  return (
+    <span 
+      className={`inline-block transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${isChinese ? 'font-chinese' : 'italic'}`}
+      style={{ 
+        transitionDuration: '600ms',
+        fontFamily: isChinese ? 'Chinese' : undefined
+      }}
+    >
+      {currentWord}
+    </span>
+  )
+}
+
 function App() {
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -54,7 +93,9 @@ function App() {
           <h2 className="text-2xl md:text-4xl lg:text-6xl font-inter font-normal text-white mb-6 leading-tight">
             Your All in One Guide to Learning 
             <br />
-            <span className="italic">Mandarin</span>
+            <AnimatedWord 
+              words={['Mandarin', '中文', 'The most spoken language in the world', '普通话']} 
+            />
           </h2>
         </div>
       </div>

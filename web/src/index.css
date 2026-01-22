@@ -16,6 +16,15 @@
   font-optical-sizing: auto;
 }
 
+@font-face {
+  font-family: 'Chinese';
+  src: url('/chinese-font.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+4E00-9FFF;
+}
+
 @layer base {
   * {
     margin: 0;
@@ -32,5 +41,15 @@
 
   .font-inter {
     font-family: 'Inter', sans-serif;
+  }
+
+  .font-chinese {
+    font-family: 'Chinese', 'Inter', sans-serif !important;
+  }
+  
+  /* Higher specificity for Chinese font in animated words */
+  h2 .font-chinese,
+  h2 span.font-chinese {
+    font-family: 'Chinese', 'Inter', sans-serif !important;
   }
 }
