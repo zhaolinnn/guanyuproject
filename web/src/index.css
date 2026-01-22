@@ -25,6 +25,14 @@
   unicode-range: U+4E00-9FFF;
 }
 
+@font-face {
+  font-family: 'ZhiMangXing';
+  src: url('/ZhiMangXing-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   * {
     margin: 0;
@@ -45,6 +53,10 @@
 
   .font-chinese {
     font-family: 'Chinese', 'Inter', sans-serif !important;
+  }
+
+  .font-zhimangxing {
+    font-family: 'ZhiMangXing', 'Chinese', 'Inter', sans-serif !important;
   }
   
   /* Higher specificity for Chinese font in animated words */

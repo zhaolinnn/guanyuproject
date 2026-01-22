@@ -72,12 +72,17 @@ function App() {
         </button>
 
         {/* Center: Logo/Title */}
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div className="absolute left-1/2 transform -translate-x-1/2 pt-8 md:pt-23 flex items-center gap-1">
           <img 
             src="/logo.png" 
             alt="GuanYu Project Logo" 
             className="h-20 md:h-28 lg:h-32 w-auto"
           />
+          <div className="flex flex-col text-white">
+            <span className="font-inter text-xl md:text-2xl lg:text-3xl font-semibold underline decoration-green-500 decoration-2 underline-offset-2">Guan Yu</span>
+            <span className="font-zhimangxing text-xl md:text-2xl lg:text-3xl font-semibold decoration-2 underline-offset-2">普通话</span>
+            <span className="font-inter text-lg md:text-xl lg:text-2xl underline decoration-green-500 decoration-2 underline-offset-2">Project</span>
+          </div>
         </div>
 
         {/* Right: Links */}
