@@ -94,4 +94,13 @@
     border-radius: 9999px; /* fully rounded */
     z-index: -1;
   }
+  
+  /* Page load animations */
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+  
+  .delay-300 {
+    transition-delay: 300ms;
+  }
 }
