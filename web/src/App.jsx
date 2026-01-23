@@ -78,8 +78,8 @@ function App() {
 
         {/* Right: Links */}
         <div className="flex items-center gap-6 font-lato text-sm uppercase tracking-wider">
-          <a href="#" className="hover:opacity-80 transition-opacity">AVAILABILITY</a>
-          <a href="#" className="hover:opacity-80 transition-opacity">CONTACT</a>
+          <a href="#" className="hover:opacity-80 transition-opacity">Login</a>
+          <a href="#" className="hover:opacity-80 transition-opacity">Sign Up</a>
         </div>
       </nav>
 
