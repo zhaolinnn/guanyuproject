@@ -1,0 +1,14 @@
+{
+  "name": "guanyuproject",
+  "version": "1.0.0",
+  "description": "GuanYu Project - Full Stack Application",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd web && npm run dev",
+    "install-all": "npm install && cd server && npm install && cd ../web && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { api } from './api'
 
 // Function to detect if text contains Chinese characters
 function hasChinese(text) {
@@ -45,6 +46,16 @@ function App() {
     setTimeout(() => {
       setIsLoaded(true)
     }, 100)
+
+    // Test API connection
+    api.healthCheck()
+      .then(data => {
+        console.log('✅ Backend connection successful!', data)
+      })
+      .catch(error => {
+        console.error('❌ Backend connection failed:', error)
+        console.log('💡 Make sure the backend server is running on http://localhost:3001')
+      })
   }, [])
 
   return (
