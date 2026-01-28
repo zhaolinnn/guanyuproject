@@ -1,5 +1,7 @@
 const API_BASE_URL = '/api';
 
+const defaultFetchOpts = { credentials: 'include' };
+
 async function handleResponse(res) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
@@ -21,6 +23,32 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password, email, name }),
+      ...defaultFetchOpts,
+    });
+    return handleResponse(res);
+  },
+
+  async login(username, password) {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+      ...defaultFetchOpts,
+    });
+    return handleResponse(res);
+  },
+
+  async getMe() {
+    const res = await fetch(`${API_BASE_URL}/auth/me`, defaultFetchOpts);
+    if (res.status === 401) return null;
+    const data = await handleResponse(res);
+    return data.user ?? null;
+  },
+
+  async logout() {
+    const res = await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      ...defaultFetchOpts,
     });
     return handleResponse(res);
   },
