@@ -1,17 +1,27 @@
-// API utility functions
+const API_BASE_URL = '/api';
 
-const API_BASE_URL = '/api'; // Vite proxy will forward to backend
+async function handleResponse(res) {
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const err = new Error(data.error || 'Request failed');
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
 
 export const api = {
-  // Health check
   async healthCheck() {
-    const response = await fetch(`${API_BASE_URL}/health`);
-    return response.json();
+    const res = await fetch(`${API_BASE_URL}/health`);
+    return res.json();
   },
-  
-  // Example: Add more API calls here
-  // async getData() {
-  //   const response = await fetch(`${API_BASE_URL}/data`);
-  //   return response.json();
-  // },
+
+  async signup({ username, password, email, name }) {
+    const res = await fetch(`${API_BASE_URL}/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, email, name }),
+    });
+    return handleResponse(res);
+  },
 };
