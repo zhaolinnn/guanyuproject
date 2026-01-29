@@ -5,6 +5,7 @@ import { SignUpPage } from './pages/SignUpPage'
 import { LoginPage } from './pages/LoginPage'
 import { CoursesPage } from './pages/CoursesPage'
 import { CourseDetailPage } from './pages/CourseDetailPage'
+import { AssignmentRouter } from './pages/AssignmentRouter'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/courses/:slug" element={<CourseDetailPage />} />
+          <Route path="/courses/:courseSlug" element={<CourseDetailPage />} />
+          <Route path="/courses/:courseSlug/:assignmentSlug" element={<AssignmentRouter />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

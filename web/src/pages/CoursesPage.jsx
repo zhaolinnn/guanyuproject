@@ -37,13 +37,13 @@ export function CoursesPage() {
 
       <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-8 pb-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="font-lato text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider text-black mb-8">
+          <h1 className="font-sans text-3xl md:text-4xl lg:text-5xl uppercase tracking-wider text-black mb-8">
             Courses
           </h1>
 
           {loading ? (
             <div className="text-center py-12">
-              <p className="font-lato text-black/60">Loading courses...</p>
+              <p className="font-sans text-black/60">Loading courses...</p>
             </div>
           ) : error ? (
             <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
@@ -51,7 +51,7 @@ export function CoursesPage() {
             </div>
           ) : courses.length === 0 ? (
             <div className="text-center py-12">
-              <p className="font-lato text-black/60">No courses available yet.</p>
+              <p className="font-sans text-black/60">No courses available yet.</p>
             </div>
           ) : (
             <div className="grid gap-4 md:gap-6">
@@ -63,11 +63,11 @@ export function CoursesPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <h2 className="font-lato text-xl md:text-2xl uppercase tracking-wider text-black mb-2">
+                      <h2 className="font-sans text-xl md:text-2xl uppercase tracking-wider text-black mb-2">
                         {course.title}
                       </h2>
                       {course.description && (
-                        <p className="font-lato text-sm text-black/70">{course.description}</p>
+                        <p className="font-sans text-sm text-black/70">{course.description}</p>
                       )}
                     </div>
                     <svg
