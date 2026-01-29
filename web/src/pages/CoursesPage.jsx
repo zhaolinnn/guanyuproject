@@ -38,15 +38,11 @@ export function CoursesPage() {
             Courses
           </h1>
 
-          {loading ? (
-            <div className="text-center py-12">
-              <p className="font-rethink text-black/60">Loading courses...</p>
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
               {error}
             </div>
-          ) : courses.length === 0 ? (
+          ) : !loading && courses.length === 0 ? (
             <div className="text-center py-12">
               <p className="font-rethink text-black/60">No courses available yet.</p>
             </div>

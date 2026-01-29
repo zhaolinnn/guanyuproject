@@ -36,19 +36,7 @@ export function CourseDetailPage() {
       .catch(() => setCompletedIds(new Set()))
   }, [user])
 
-  if (loading) {
-    return (
-      <div className="relative min-h-screen w-full overflow-hidden">
-        <div className="absolute inset-0 w-full min-h-full" style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }} />
-        <PageNavbar />
-        <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-12 pb-12">
-          <p className="font-rethink text-black/60">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error || !course) {
+  if (!loading && (error || !course)) {
     return (
       <div className="relative min-h-screen w-full overflow-hidden">
         <div className="absolute inset-0 w-full min-h-full" style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }} />
@@ -71,15 +59,19 @@ export function CourseDetailPage() {
       <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-8 pb-12">
         <div className="max-w-4xl mx-auto">
           <Link to="/courses" className="font-rethink text-sm text-black/70 hover:opacity-80 mb-6 inline-block">← Back to courses</Link>
-          <h1 className="font-rethink text-3xl md:text-4xl lg:text-5xl text-black mb-4">
-            {course.title}
-          </h1>
-          {course.description && (
-            <p className="font-rethink text-lg text-black/70 mb-8">{course.description}</p>
-          )}
+          {course && (
+            <>
+              <h1 className="font-rethink text-3xl md:text-4xl lg:text-5xl text-black mb-4">
+                {course.title}
+              </h1>
+              {course.description && (
+                <p className="font-rethink text-lg text-black/70 mb-8">{course.description}</p>
+              )}
 
-          <h2 className="font-rethink text-xl text-black mb-4">Assignments</h2>
-          {course.assignments && course.assignments.length > 0 ? (
+              <h2 className="font-rethink text-xl text-black mb-4">Assignments</h2>
+            </>
+          )}
+          {course && course.assignments && course.assignments.length > 0 ? (
             <div className="grid gap-4">
               {course.assignments.map((assignment) => (
                 <Link
@@ -114,9 +106,9 @@ export function CourseDetailPage() {
                 </Link>
               ))}
             </div>
-          ) : (
+          ) : course ? (
             <p className="font-rethink text-black/60">No assignments yet.</p>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
