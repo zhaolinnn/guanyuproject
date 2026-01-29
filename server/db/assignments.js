@@ -79,6 +79,14 @@ export async function hasCompleted(userId, assignmentId) {
   return rows.length > 0;
 }
 
+export async function removeCompletion(userId, assignmentId) {
+  await query(
+    `DELETE FROM user_assignment_completions
+     WHERE user_id = $1 AND assignment_id = $2`,
+    [userId, assignmentId]
+  );
+}
+
 /** Add an assignment. course_slug + course_title (and optional course_description) group it into a "course". */
 export async function addAssignment({ course_slug, course_title, course_description, title, slug, sort_order = 0 }) {
   const { rows } = await query(

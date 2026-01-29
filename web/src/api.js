@@ -68,4 +68,29 @@ export const api = {
     if (res.status === 401) return { completions: [] };
     return handleResponse(res);
   },
+
+  async getAssignmentCompletionStatus(assignmentSlug) {
+    const res = await fetch(
+      `${API_BASE_URL}/courses/assignments/${encodeURIComponent(assignmentSlug)}/complete`,
+      defaultFetchOpts
+    );
+    if (res.status === 401) return { completed: false };
+    return handleResponse(res);
+  },
+
+  async markAssignmentComplete(assignmentSlug) {
+    const res = await fetch(
+      `${API_BASE_URL}/courses/assignments/${encodeURIComponent(assignmentSlug)}/complete`,
+      { method: 'POST', ...defaultFetchOpts }
+    );
+    return handleResponse(res);
+  },
+
+  async unmarkAssignmentComplete(assignmentSlug) {
+    const res = await fetch(
+      `${API_BASE_URL}/courses/assignments/${encodeURIComponent(assignmentSlug)}/complete/undo`,
+      { method: 'POST', ...defaultFetchOpts }
+    );
+    return handleResponse(res);
+  },
 };
