@@ -22,6 +22,17 @@ export function SignUpPage() {
       return
     }
 
+    const emailTrimmed = email.trim()
+    if (!emailTrimmed) {
+      setError('Email is required')
+      return
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      setError('Please enter a valid email address')
+      return
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       return
@@ -37,7 +48,7 @@ export function SignUpPage() {
       await api.signup({
         username: username.trim(),
         password,
-        email: email.trim() || undefined,
+        email: emailTrimmed,
         name: name.trim() || undefined,
       })
       navigate('/', { state: { signedUp: true } })
@@ -57,7 +68,7 @@ export function SignUpPage() {
 
       <Navbar />
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-24 pb-12">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-12 pb-12">
         <div className="w-full max-w-md">
           <h1 className="font-lato text-2xl md:text-3xl uppercase tracking-wider text-black mb-2 text-center">
             Create an account
@@ -94,12 +105,13 @@ export function SignUpPage() {
             />
 
             <label className="block font-lato text-sm uppercase tracking-wider text-black/80 mb-1">
-              Email <span className="normal-case text-black/50">(optional)</span>
+              Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
               className="w-full mb-4 px-4 py-2.5 rounded-lg border border-black/15 bg-white font-lato text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-[rgba(0,168,107,0.5)] focus:border-[rgba(0,168,107,0.6)]"
               placeholder="you@example.com"
               autoComplete="email"

@@ -32,7 +32,7 @@ export function LoginPage() {
         style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
       />
       <Navbar />
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-24">
+      <div className="relative z-10 flex items-start justify-center min-h-screen px-4 pt-20">
         <div className="w-full max-w-md">
           <h1 className="font-lato text-2xl md:text-3xl uppercase tracking-wider text-black mb-2 text-center">
             Log in

@@ -53,8 +53,8 @@ router.post('/signup', async (req, res) => {
   try {
     const { username, password, email, name } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Username and password are required' });
+    if (!username || !password || !email) {
+      return res.status(400).json({ error: 'Username, email, and password are required' });
     }
 
     const usernameTrimmed = String(username).trim();
@@ -66,19 +66,27 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'Username must be at least 2 characters' });
     }
 
+    const emailTrimmed = String(email).trim().toLowerCase();
+    if (!emailTrimmed) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      return res.status(400).json({ error: 'Please enter a valid email address' });
+    }
+
     if (String(password).length < 8) {
       return res.status(400).json({ error: 'Password must be at least 8 characters' });
     }
 
     const password_hash = await bcrypt.hash(String(password), 10);
-    const emailVal = email ? String(email).trim().toLowerCase() || null : null;
     const nameVal = name ? String(name).trim() || null : null;
 
     const { rows } = await query(
       `INSERT INTO users (username, password_hash, email, name)
        VALUES ($1, $2, $3, $4)
        RETURNING id, username, email, name, created_at`,
-      [usernameTrimmed, password_hash, emailVal, nameVal]
+      [usernameTrimmed, password_hash, emailTrimmed, nameVal]
     );
 
     const user = rows[0];
