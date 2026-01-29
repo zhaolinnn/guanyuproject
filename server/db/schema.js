@@ -1,7 +1,7 @@
 /**
  * Database schema: users, assignments, user_assignment_completions.
- * initDb() in ../db.js runs these. To add new assignments, INSERT into assignments
- * and optionally seed completions; see server/db/README.md.
+ * No courses table — "courses" are just groupings by course_slug on assignments.
+ * Track completions per assignment; you can count how many a user completed per course.
  */
 
 export const USERS_TABLE = `
@@ -18,6 +18,9 @@ export const USERS_TABLE = `
 export const ASSIGNMENTS_TABLE = `
   CREATE TABLE IF NOT EXISTS assignments (
     id SERIAL PRIMARY KEY,
+    course_slug VARCHAR(255) NOT NULL,
+    course_title VARCHAR(500) NOT NULL,
+    course_description TEXT,
     title VARCHAR(500) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
     sort_order INT NOT NULL DEFAULT 0,

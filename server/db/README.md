@@ -1,44 +1,33 @@
-# Database tables and assignments
+# Database: users, assignments, completions (no courses table)
 
 ## Tables
 
-- **users** — `id`, `username` (unique), `password_hash`, `created_at`, `email` (optional), `name` (optional)
-- **assignments** — `id`, `title`, `slug` (unique), `sort_order`, `created_at` — defines each assignment/lesson
-- **user_assignment_completions** — `user_id`, `assignment_id`, `completed_at` — which user did which assignment (primary key `(user_id, assignment_id)`)
+- **users** — `id`, `username`, `password_hash`, `created_at`, `email`, `name`
+- **assignments** — `id`, `course_slug`, `course_title`, `course_description`, `title`, `slug` (unique), `sort_order`, `created_at`  
+  "Courses" are just groupings: same `course_slug` + `course_title` on multiple assignments.
+- **user_assignment_completions** — `user_id`, `assignment_id`, `completed_at` — how many assignments a user completed (per course = count where assignment.course_slug = X).
 
-## How to add new assignments
+## How to add a course and its assignments
 
-1. **Insert into `assignments`** so the app knows the assignment exists:
+1. **Insert assignments** with the same `course_slug` and `course_title` (and optional `course_description`):
 
    ```sql
-   INSERT INTO assignments (title, slug, sort_order)
-   VALUES ('Lesson 1: Greetings', 'lesson-1-greetings', 1);
+   INSERT INTO assignments (course_slug, course_title, course_description, title, slug, sort_order)
+   VALUES ('pinyin', 'Pinyin', 'Learn the romanization system for Mandarin.', 'Introduction to Pinyin', 'pinyin-intro', 1);
    ```
 
-   Or use the helper in code:
+   Or use `addAssignment({ course_slug, course_title, course_description, title, slug, sort_order })` from `db/assignments.js`.
 
-   ```js
-   import { addAssignment } from './db/assignments.js';
-   await addAssignment({ title: 'Lesson 1: Greetings', slug: 'lesson-1-greetings', sort_order: 1 });
+2. **Seed Pinyin** (one-time): From the `server/` directory:
+
+   ```bash
+   cd server && npm run seed
    ```
 
-2. **Completions** — when a user finishes an assignment, insert (or upsert) into `user_assignment_completions`:
+   This inserts 5 Pinyin assignments (intro, initials, finals, tones, syllables). The app derives the "Pinyin" course from them.
 
-   ```js
-   import { recordCompletion } from './db/assignments.js';
-   await recordCompletion(userId, assignmentId);
-   ```
+## Migrations
 
-   To check if a user has done an assignment:
-
-   ```js
-   import { hasCompleted, getCompletionsForUser } from './db/assignments.js';
-   const done = await hasCompleted(userId, assignmentId);
-   const allDone = await getCompletionsForUser(userId); // { assignment_id, completed_at }[]
-   ```
-
-3. **Order** — Use `sort_order` on `assignments` to control the order (e.g. 1, 2, 3…). The app can list assignments by `sort_order` and show completion per user.
-
-## Migrating from the old users table (email-only)
-
-If you already have a `users` table with only `email` (no `username`), run the migration in `migrations/001_username_and_assignments.sql` once, then start the server as usual.
+- **001** — Old users (email-only): run `migrations/001_username_and_assignments.sql`.
+- **002** — Old schema with courses table: run `migrations/002_courses_table.sql` if you had it.
+- **003** — Simplify to assignments-only (no courses table): run `migrations/003_assignments_only.sql`, then run the seed.

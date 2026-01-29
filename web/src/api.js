@@ -52,4 +52,20 @@ export const api = {
     });
     return handleResponse(res);
   },
+
+  async getCourses() {
+    const res = await fetch(`${API_BASE_URL}/courses`);
+    return handleResponse(res);
+  },
+
+  async getCourseBySlug(slug) {
+    const res = await fetch(`${API_BASE_URL}/courses/${encodeURIComponent(slug)}`);
+    return handleResponse(res);
+  },
+
+  async getCompletions() {
+    const res = await fetch(`${API_BASE_URL}/courses/completions`, defaultFetchOpts);
+    if (res.status === 401) return { completions: [] };
+    return handleResponse(res);
+  },
 };

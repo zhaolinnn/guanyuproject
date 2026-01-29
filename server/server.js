@@ -6,6 +6,7 @@ import passport from 'passport';
 import { initDb } from './db.js';
 import './passport.js';
 import authRoutes from './routes/auth.js';
+import coursesRoutes from './routes/courses.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -36,6 +37,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running!' });
 });
 app.use('/api/auth', authRoutes);
+app.use('/api/courses', coursesRoutes);
 
 // Start server (init DB first)
 initDb()
