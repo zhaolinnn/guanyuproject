@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Navbar } from '../components/Navbar'
+import { PageNavbar } from '../components/PageNavbar'
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -31,7 +31,7 @@ export function LoginPage() {
         className="absolute inset-0 w-full min-h-full"
         style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
       />
-      <Navbar />
+      <PageNavbar />
       <div className="relative z-10 flex items-start justify-center min-h-screen px-4 pt-20">
         <div className="w-full max-w-md">
           <h1 className="font-lato text-2xl md:text-3xl uppercase tracking-wider text-black mb-2 text-center">

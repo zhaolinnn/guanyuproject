@@ -64,10 +64,13 @@ export function LandingPage() {
             <br />
             <AnimatedWord words={['Mandarin', '中文', 'The most spoken language in the world', '普通话', '国语', '汉语']} />
           </h2>
+          <p className="text-center text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+            Master consuming native level Chinese content. Learn the modern way to memorize vocabulary. Build an impenetrable workflow. For absolutely free.
+          </p>
           <Link
             to="/courses"
-            className="inline-block px-5 py-2.5 md:px-6 md:py-3 text-lg md:text-xl font-medium text-white rounded-xl hover:opacity-95 transition-opacity shadow-[0_4px_0_0_rgba(0,0,0,0.15)]"
-            style={{ backgroundColor: 'rgb(0, 168, 107)' }}
+            className="inline-block px-5 py-2.5 md:px-6 md:py-3 text-lg md:text-xl font-medium text-white rounded-xl hover:opacity-95 transition-opacity"
+            style={{ backgroundColor: 'rgb(0, 168, 107)', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
           >
             View Full Curriculum
           </Link>

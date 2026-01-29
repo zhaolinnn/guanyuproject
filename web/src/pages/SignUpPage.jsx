@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../api'
-import { Navbar } from '../components/Navbar'
+import { PageNavbar } from '../components/PageNavbar'
 
 export function SignUpPage() {
   const navigate = useNavigate()
@@ -66,7 +66,7 @@ export function SignUpPage() {
         style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
       />
 
-      <Navbar />
+      <PageNavbar />
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-12 pb-12">
         <div className="w-full max-w-md">
