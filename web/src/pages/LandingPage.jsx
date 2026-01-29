@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { api } from '../api'
 import { Navbar } from '../components/Navbar'
 
@@ -58,11 +59,18 @@ export function LandingPage() {
 
       <div className="relative z-10 flex items-center justify-center h-screen">
         <div className={`text-center px-4 -mt-24 md:-mt-32 transition-all duration-700 ease-out delay-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h2 className="text-2xl md:text-4xl lg:text-6xl font-inter font-normal text-black mb-6 leading-tight">
+          <h2 className="text-2xl md:text-4xl lg:text-6xl font-inter font-normal text-black mb-10 leading-tight">
             Your <span className="px-0.5 rounded" style={{ backgroundColor: 'rgba(0, 168, 107, 0.4)', paddingTop: 0, paddingBottom: 0, lineHeight: '1.2' }}>All in One</span> Guide to Learning{' '}
             <br />
             <AnimatedWord words={['Mandarin', '中文', 'The most spoken language in the world', '普通话', '国语', '汉语']} />
           </h2>
+          <Link
+            to="/courses"
+            className="inline-block px-5 py-2.5 md:px-6 md:py-3 text-lg md:text-xl font-medium text-white rounded-xl hover:opacity-95 transition-opacity shadow-[0_4px_0_0_rgba(0,0,0,0.15)]"
+            style={{ backgroundColor: 'rgb(0, 168, 107)' }}
+          >
+            View Full Curriculum
+          </Link>
         </div>
       </div>
 
