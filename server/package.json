@@ -8,6 +8,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "seed": "node db/seed-pinyin.js",
+    "seed-introduction": "node db/seed-introduction.js",
     "list-completions": "node db/list-completions.js"
   },
   "dependencies": {
