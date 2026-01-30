@@ -97,6 +97,11 @@ export function CoursesPage() {
 
       <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-8 pb-12">
         <div className="max-w-4xl mx-auto">
+          {user && (
+            <p className="font-rethink text-lg md:text-xl text-black/70 mb-2">
+              Welcome back, {user.username}
+            </p>
+          )}
           <h1 className="font-rethink text-3xl md:text-4xl lg:text-5xl text-black mb-8">
             Courses
           </h1>

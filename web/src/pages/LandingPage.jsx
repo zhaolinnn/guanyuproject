@@ -103,7 +103,7 @@ export function LandingPage() {
         className="absolute bottom-8 left-8 md:bottom-12 md:left-5 z-10 font-zhimangxing text-2xl md:text-3xl lg:text-4xl text-black"
         style={{ writingMode: 'vertical-rl', textOrientation: 'upright', opacity: 0.15, letterSpacing: '0.2em' }}
       >
-        废寝忘食 凿壁偷光 败走麦城
+        废寝忘食 凿壁偷光 不怕慢，只怕站
       </div>
 
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">

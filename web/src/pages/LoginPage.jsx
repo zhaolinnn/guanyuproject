@@ -17,7 +17,7 @@ export function LoginPage() {
     setLoading(true)
     try {
       await login(username.trim(), password)
-      navigate('/')
+      navigate('/courses')
     } catch (err) {
       setError(err.message || 'Login failed')
     } finally {

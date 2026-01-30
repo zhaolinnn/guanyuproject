@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { IntroductionToPinyinPage } from './assignments/IntroductionToPinyinPage'
+import { PinyinInitialsPage } from './assignments/PinyinInitialsPage'
 import { PageNavbar } from '../components/PageNavbar'
 
 /**
@@ -12,6 +13,9 @@ export function AssignmentRouter() {
 
   if (courseSlug === 'pinyin' && assignmentSlug === 'pinyin-intro') {
     return <IntroductionToPinyinPage />
+  }
+  if (courseSlug === 'pinyin' && assignmentSlug === 'pinyin-initials') {
+    return <PinyinInitialsPage />
   }
 
   // No dedicated page yet — show placeholder. Add more cases above as you create pages.
