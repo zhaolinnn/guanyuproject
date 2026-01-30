@@ -2,11 +2,47 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
 import { PageNavbar } from '../components/PageNavbar'
+import { useAuth } from '../context/AuthContext'
+
+function CourseProgressCircle({ completed, total, size = 44 }) {
+  if (total === 0) return null
+  const r = (size - 6) / 2
+  const circumference = 2 * Math.PI * r
+  const progress = Math.min(1, completed / total)
+  const strokeDashoffset = circumference * (1 - progress)
+  return (
+    <svg width={size} height={size} className="flex-shrink-0" aria-hidden>
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke="rgba(0,0,0,0.1)"
+        strokeWidth="3"
+      />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke="rgb(0, 168, 107)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeDasharray={circumference}
+        strokeDashoffset={strokeDashoffset}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        className="transition-[stroke-dashoffset] duration-500 ease-out"
+      />
+    </svg>
+  )
+}
 
 export function CoursesPage() {
+  const { user } = useAuth()
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [courseProgress, setCourseProgress] = useState({})
 
   useEffect(() => {
     async function loadCourses() {
@@ -22,6 +58,33 @@ export function CoursesPage() {
     }
     loadCourses()
   }, [])
+
+  useEffect(() => {
+    if (!user || courses.length === 0) {
+      setCourseProgress({})
+      return
+    }
+    async function loadProgress() {
+      try {
+        const { completions } = await api.getCompletions()
+        const completedIds = new Set(completions.map((c) => c.assignment_id))
+        const details = await Promise.all(courses.map((c) => api.getCourseBySlug(c.slug)))
+        const progress = {}
+        courses.forEach((course, i) => {
+          const courseData = details[i]?.course
+          const assignments = courseData?.assignments ?? []
+          const total = assignments.length
+          const completed = assignments.filter((a) => completedIds.has(a.id)).length
+          progress[course.slug] = { total, completed }
+        })
+        setCourseProgress(progress)
+      } catch (err) {
+        console.error('Failed to load progress:', err)
+        setCourseProgress({})
+      }
+    }
+    loadProgress()
+  }, [user, courses])
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
@@ -55,7 +118,15 @@ export function CoursesPage() {
                   className="block rounded-2xl p-6 md:p-8 shadow-lg border border-black/10 bg-white/90 backdrop-blur-sm hover:shadow-xl transition-all hover:scale-[1.02]"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
+                    {user && courseProgress[course.slug] && (
+                      <div className="flex-shrink-0 pt-0.5">
+                        <CourseProgressCircle
+                          completed={courseProgress[course.slug].completed}
+                          total={courseProgress[course.slug].total}
+                        />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
                       <h2 className="font-rethink text-xl md:text-2xl text-black mb-2">
                         {course.title}
                       </h2>

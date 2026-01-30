@@ -159,6 +159,7 @@ export function LandingPage() {
             The biggest mistake people make when learning a language is regurgitating vocabulary and robotic sentence structures instead of using the language as a form of communication which is the foundation of any language. 
           </p>
           <br />
+          <br />
           <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mb-8 md:mb-10">
             What will you learn?
           </h2>
