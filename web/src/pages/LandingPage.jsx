@@ -141,14 +141,15 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Third section: light, same gradient as hero */}
+      {/* Third section: light, same gradient as hero — text left / image right (Zhangjiajie) */}
       <section className="relative w-full py-20 md:py-28 overflow-hidden">
         <div
           className="absolute inset-0 w-full h-full"
           style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
         />
-        <div className="relative z-10 max-w-3xl mx-auto px-8 md:px-12 lg:px-20 text-center">
-          <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mb-8 md:mb-10">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-20 flex flex-col md:flex-row items-center gap-12 md:gap-12">
+          <div className="w-full md:flex-1 md:min-w-0 md:pr-10 flex flex-col justify-center text-center md:text-left">
+            <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mb-8 md:mb-10">
             What is immersion?
           </h2>
           <p className="font-rethink text-lg md:text-xl text-black/75 leading-relaxed">
@@ -156,17 +157,32 @@ export function LandingPage() {
           </p>
           <br />
           <p className="font-rethink text-lg md:text-xl text-black/75 leading-relaxed">
-            The biggest mistake people make when learning a language is regurgitating vocabulary and robotic sentence structures instead of using the language as a form of communication which is the foundation of any language. 
+            The biggest mistake people make when learning a language is regurgitating vocabulary and robotic sentence structures instead of using the language as a form of communication which is the foundation of any language.
           </p>
-          <br />
-          <br />
-          <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mb-8 md:mb-10">
+          <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mt-10 md:mt-12 mb-8 md:mb-10">
             What will you learn?
           </h2>
           <p className="font-rethink text-lg md:text-xl text-black/75 leading-relaxed">
             In this course, you will learn how to use the language as a form of communication by sentence mining and getting a feel for how Mandarin is used in everyday life. In this way, you will learn to understand native-level speed and fluency which is often lacking in students who only learn in a classroom setting.
           </p>
           <br />
+          </div>
+          <div className="w-full md:w-96 md:flex-shrink-0 md:ml-auto flex flex-col items-center md:items-end">
+            <div
+              className="aspect-[3/4] w-full max-w-[320px] md:max-w-none md:w-96 rounded-2xl overflow-hidden bg-[#e8ebe8]"
+              style={{
+                backgroundImage: 'url(https://upload.wikimedia.org/wikipedia/commons/d/d4/Wulingyuan_3.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06)',
+              }}
+              role="img"
+              aria-label="Zhangjiajie landscape"
+            />
+            <p className="font-rethink text-sm text-black/50 mt-3">
+              Zhangjiajie 张家界
+            </p>
+          </div>
         </div>
       </section>
 
@@ -185,7 +201,7 @@ export function LandingPage() {
               Hey there, I'm Alan Liu 劉兆林. GuanYu Project 關羽 is built by a student for students. If you have feedback or want to get in touch, I’d love to hear from you.
             </p>
             <a
-              href="https://github.com/zhaolinnn"
+              href="https://github.com/zhaolinnn/guanyuproject"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center mt-4 text-white/70 hover:text-white transition-colors"
