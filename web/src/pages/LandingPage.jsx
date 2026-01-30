@@ -163,7 +163,7 @@ export function LandingPage() {
             What will you learn?
           </h2>
           <p className="font-rethink text-lg md:text-xl text-black/75 leading-relaxed">
-            In this course, you will learn how to use the language as a form of communication by sentence mining and getting a feel for how Mandarin is used in everyday life. In this way, you will learn to understand native-level speed and fluency which is often lacking in students who only learn in a classroom setting.
+            In these courses, you will learn how to use the language as a form of communication by sentence mining and getting a feel for how Mandarin is used in everyday life. In this way, you will learn to understand native-level speed and fluency which is often lacking in students who only learn in a classroom setting.
           </p>
           <br />
           </div>
