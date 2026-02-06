@@ -1,158 +1,36 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { api } from '../api'
 import { PageNavbar } from '../components/PageNavbar'
+import { CoursesSidebar } from '../components/CoursesSidebar'
 import { useAuth } from '../context/AuthContext'
-
-function CourseProgressCircle({ completed, total, size = 44 }) {
-  if (total === 0) return null
-  const r = (size - 6) / 2
-  const circumference = 2 * Math.PI * r
-  const progress = Math.min(1, completed / total)
-  const strokeDashoffset = circumference * (1 - progress)
-  return (
-    <svg width={size} height={size} className="flex-shrink-0" aria-hidden>
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke="rgba(0,0,0,0.1)"
-        strokeWidth="3"
-      />
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke="rgb(0, 168, 107)"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeDasharray={circumference}
-        strokeDashoffset={strokeDashoffset}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        className="transition-[stroke-dashoffset] duration-500 ease-out"
-      />
-    </svg>
-  )
-}
 
 export function CoursesPage() {
   const { user } = useAuth()
-  const [courses, setCourses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [courseProgress, setCourseProgress] = useState({})
-
-  useEffect(() => {
-    async function loadCourses() {
-      try {
-        const coursesData = await api.getCourses()
-        setCourses(coursesData.courses || [])
-      } catch (err) {
-        console.error('Failed to load courses:', err)
-        setError(err.message || 'Failed to load courses. Make sure the server is running.')
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadCourses()
-  }, [])
-
-  useEffect(() => {
-    if (!user || courses.length === 0) {
-      setCourseProgress({})
-      return
-    }
-    async function loadProgress() {
-      try {
-        const { completions } = await api.getCompletions()
-        const completedIds = new Set(completions.map((c) => c.assignment_id))
-        const details = await Promise.all(courses.map((c) => api.getCourseBySlug(c.slug)))
-        const progress = {}
-        courses.forEach((course, i) => {
-          const courseData = details[i]?.course
-          const assignments = courseData?.assignments ?? []
-          const total = assignments.length
-          const completed = assignments.filter((a) => completedIds.has(a.id)).length
-          progress[course.slug] = { total, completed }
-        })
-        setCourseProgress(progress)
-      } catch (err) {
-        console.error('Failed to load progress:', err)
-        setCourseProgress({})
-      }
-    }
-    loadProgress()
-  }, [user, courses])
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
-      <div
-        className="absolute inset-0 w-full min-h-full"
-        style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
-      />
-
+    <div className="relative min-h-screen w-full flex flex-col">
       <PageNavbar />
 
-      <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-8 pb-12">
-        <div className="max-w-4xl mx-auto">
-          {user && (
-            <p className="font-rethink text-lg md:text-xl text-black/70 mb-2">
-              Welcome back, {user.username}
-            </p>
-          )}
-          <h1 className="font-rethink text-3xl md:text-4xl lg:text-5xl text-black mb-8">
-            Courses
-          </h1>
+      <div className="relative flex-1 flex min-h-0">
+        <CoursesSidebar />
 
-          {error ? (
-            <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
-              {error}
-            </div>
-          ) : !loading && courses.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="font-rethink text-black/60">No courses available yet.</p>
-            </div>
-          ) : (
-            <div className="grid gap-4 md:gap-6">
-              {courses.map((course) => (
-                <Link
-                  key={course.slug}
-                  to={`/courses/${course.slug}`}
-                  className="block rounded-2xl p-6 md:p-8 shadow-lg border border-black/10 bg-white/90 backdrop-blur-sm hover:shadow-xl transition-all hover:scale-[1.02]"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    {user && courseProgress[course.slug] && (
-                      <div className="flex-shrink-0 pt-0.5">
-                        <CourseProgressCircle
-                          completed={courseProgress[course.slug].completed}
-                          total={courseProgress[course.slug].total}
-                        />
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <h2 className="font-rethink text-xl md:text-2xl text-black mb-2">
-                        {course.title}
-                      </h2>
-                      {course.description && (
-                        <p className="font-rethink text-sm text-black/70">{course.description}</p>
-                      )}
-                    </div>
-                    <svg
-                      className="w-6 h-6 text-black/40 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* Main content: hero heading */}
+        <main
+          className="relative flex-1 min-w-0 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-12 md:py-16"
+          style={{
+            background:
+              'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4',
+          }}
+        >
+          <div className="max-w-3xl">
+            {user && (
+              <p className="font-rethink text-lg md:text-xl text-black/70 mb-3">
+                Welcome back, {user.name || user.username}
+              </p>
+            )}
+            <h1 className="font-rethink text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-black leading-tight">
+              Unlock your Mandarin Skills
+            </h1>
+          </div>
+        </main>
       </div>
     </div>
   )

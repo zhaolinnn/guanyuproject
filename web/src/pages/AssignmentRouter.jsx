@@ -1,44 +1,42 @@
 import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import { IntroductionToPinyinPage } from './assignments/IntroductionToPinyinPage'
 import { PinyinInitialsPage } from './assignments/PinyinInitialsPage'
-import { PageNavbar } from '../components/PageNavbar'
+import { CoursesLayout } from '../components/CoursesLayout'
 
 /**
  * Renders the correct assignment page by slug. Add new assignment pages here.
- * Each assignment can have its own page component under pages/assignments/.
+ * Each assignment is wrapped in CoursesLayout (navbar + sidebar + content).
  */
 export function AssignmentRouter() {
   const { courseSlug, assignmentSlug } = useParams()
 
   if (courseSlug === 'pinyin' && assignmentSlug === 'pinyin-intro') {
-    return <IntroductionToPinyinPage />
+    return (
+      <CoursesLayout>
+        <IntroductionToPinyinPage embedded />
+      </CoursesLayout>
+    )
   }
   if (courseSlug === 'pinyin' && assignmentSlug === 'pinyin-initials') {
-    return <PinyinInitialsPage />
+    return (
+      <CoursesLayout>
+        <PinyinInitialsPage embedded />
+      </CoursesLayout>
+    )
   }
 
-  // No dedicated page yet — show placeholder. Add more cases above as you create pages.
+  // No dedicated page yet — show placeholder with same layout (sidebar + content).
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
-      <div
-        className="absolute inset-0 w-full min-h-full"
-        style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
-      />
-      <PageNavbar />
-      <div className="relative z-10 px-8 md:px-12 lg:px-20 pt-8 pb-12">
+    <CoursesLayout>
+      <div className="px-8 md:px-12 lg:px-20 pt-8 pb-12">
         <div className="max-w-3xl mx-auto">
-          <Link
-            to={courseSlug ? `/courses/${courseSlug}` : '/courses'}
-            className="font-rethink text-sm text-black/70 hover:opacity-80 mb-6 inline-block"
-          >
-            ← Back to course
-          </Link>
           <div className="flex flex-col items-center justify-center min-h-[50vh]">
-            <p className="font-rethink text-black/60 text-center">This assignment doesn’t have a page yet. Coming soon.</p>
+            <p className="font-rethink text-black/60 text-center">
+              This assignment doesn’t have a page yet. Coming soon.
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </CoursesLayout>
   )
 }
