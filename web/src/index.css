@@ -49,6 +49,10 @@
   font-display: swap;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base {
   * {
     margin: 0;

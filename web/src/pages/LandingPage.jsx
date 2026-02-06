@@ -1,8 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import { api } from '../api'
 import { Navbar } from '../components/Navbar'
 import { PageNavbar } from '../components/PageNavbar'
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 function hasChinese(text) {
   return /[\u4e00-\u9fff]/.test(text)
@@ -41,8 +46,101 @@ const STICKY_NAV_SCROLL_THRESHOLD = 80
 export function LandingPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [showStickyNav, setShowStickyNav] = useState(false)
+  const wrapperRef = useRef(null)
+  const contentRef = useRef(null)
+  const section2Ref = useRef(null)
+  const section3Ref = useRef(null)
+  const section3TextRef = useRef(null)
+  const section3ImageRef = useRef(null)
+  const footerRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const wrapper = wrapperRef.current
+    const content = contentRef.current
+    const el2 = section2Ref.current
+    const el3 = section3Ref.current
+    const text3 = section3TextRef.current
+    const img3 = section3ImageRef.current
+    const footer = footerRef.current
+
+    if (!wrapper || !content || !el2 || !el3 || !text3 || !img3 || !footer) {
+      return
+    }
+
+    const smoother = ScrollSmoother.create({
+      wrapper,
+      content,
+      smooth: 1.5,
+      effects: true,
+      onUpdate: (self) => {
+        setShowStickyNav(self.scrollTop() > STICKY_NAV_SCROLL_THRESHOLD)
+      },
+    })
+
+    const ctx = gsap.context(() => {
+      gsap.from(el2, {
+        scrollTrigger: {
+          trigger: el2,
+          start: 'top 85%',
+          end: 'top 50%',
+          toggleActions: 'play none none none',
+        },
+        y: 100,
+        opacity: 0,
+        scale: 0.94,
+        duration: 1.2,
+        ease: 'power3.out',
+      })
+      gsap.from(text3, {
+        scrollTrigger: {
+          trigger: el3,
+          start: 'top 82%',
+          end: 'top 45%',
+          toggleActions: 'play none none none',
+        },
+        y: 90,
+        opacity: 0,
+        scale: 0.96,
+        duration: 1.1,
+        ease: 'power3.out',
+      })
+      gsap.from(img3, {
+        scrollTrigger: {
+          trigger: el3,
+          start: 'top 82%',
+          end: 'top 45%',
+          toggleActions: 'play none none none',
+        },
+        y: 90,
+        opacity: 0,
+        scale: 0.96,
+        duration: 1.1,
+        delay: 0.2,
+        ease: 'power3.out',
+      })
+      gsap.from(footer, {
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top 92%',
+          toggleActions: 'play none none none',
+        },
+        y: 70,
+        opacity: 0,
+        scale: 0.98,
+        duration: 1,
+        ease: 'power2.out',
+      })
+    })
+    return () => {
+      ctx.revert()
+      const existing = ScrollSmoother.get()
+      if (existing) existing.kill()
+    }
+  }, [])
 
   useEffect(() => {
+    const smoother = ScrollSmoother.get()
+    if (smoother) return
     function onScroll() {
       setShowStickyNav(window.scrollY > STICKY_NAV_SCROLL_THRESHOLD)
     }
@@ -61,7 +159,13 @@ export function LandingPage() {
   }, [])
 
   return (
-    <div className="relative min-h-screen w-full">
+    <div
+      ref={wrapperRef}
+      id="smooth-wrapper"
+      className="h-screen w-full overflow-y-auto overflow-x-hidden"
+    >
+      <div ref={contentRef} id="smooth-content" className="relative w-full">
+        <div className="relative min-h-screen w-full">
       {/* Sticky PageNavbar: appears when user scrolls, fixed at top */}
       <div
         className={`fixed top-0 left-0 right-0 z-50 transition-opacity duration-300 ${showStickyNav ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -114,7 +218,7 @@ export function LandingPage() {
       </section>
 
       {/* Second section: dark, image left / text right — below the fold */}
-      <section className="relative w-full flex items-center bg-[#1a1f2e] py-16 md:py-20">
+      <section ref={section2Ref} className="relative w-full flex items-center bg-[#1a1f2e] py-16 md:py-20">
         <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-20 flex flex-col md:flex-row items-center gap-12 md:gap-20">
           <div className="w-full md:w-1/2 flex-shrink-0">
             <div
@@ -142,13 +246,13 @@ export function LandingPage() {
       </section>
 
       {/* Third section: light, same gradient as hero — text left / image right (Zhangjiajie) */}
-      <section className="relative w-full py-20 md:py-28 overflow-hidden">
+      <section ref={section3Ref} className="relative w-full py-20 md:py-28 overflow-hidden">
         <div
           className="absolute inset-0 w-full h-full"
           style={{ background: 'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4' }}
         />
         <div className="relative z-10 w-full max-w-6xl mx-auto px-8 md:px-12 lg:px-20 flex flex-col md:flex-row items-center gap-12 md:gap-12">
-          <div className="w-full md:flex-1 md:min-w-0 md:pr-10 flex flex-col justify-center text-center md:text-left">
+          <div ref={section3TextRef} className="w-full md:flex-1 md:min-w-0 md:pr-10 flex flex-col justify-center text-center md:text-left">
             <h2 className="font-rethink text-4xl md:text-5xl lg:text-6xl text-black mb-8 md:mb-10">
             What is immersion?
           </h2>
@@ -167,7 +271,7 @@ export function LandingPage() {
           </p>
           <br />
           </div>
-          <div className="w-full md:w-96 md:flex-shrink-0 md:ml-auto flex flex-col items-center md:items-end">
+          <div ref={section3ImageRef} className="w-full md:w-96 md:flex-shrink-0 md:ml-auto flex flex-col items-center md:items-end">
             <div
               className="aspect-[3/4] w-full max-w-[320px] md:max-w-none md:w-96 rounded-2xl overflow-hidden bg-[#e8ebe8]"
               style={{
@@ -187,7 +291,7 @@ export function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative w-full bg-[#1a1f2e] py-12 md:py-16">
+      <footer ref={footerRef} className="relative w-full bg-[#1a1f2e] py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-8 md:px-12 lg:px-20 flex flex-col md:flex-row md:items-start md:justify-between gap-10 md:gap-16">
           <div className="flex flex-col items-center md:items-start">
             <img src="/logo.png" alt="GuanYu Project" className="h-10 md:h-12 w-auto block" />
@@ -214,6 +318,8 @@ export function LandingPage() {
           </div>
         </div>
       </footer>
+        </div>
+      </div>
     </div>
   )
 }
