@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import confetti from 'canvas-confetti'
 import { PageNavbar } from '../../components/PageNavbar'
 import { useAuth } from '../../context/AuthContext'
+import { useCompletionsInvalidate } from '../../context/CompletionsContext'
 import { api } from '../../api'
 
 const LOREM =
@@ -12,6 +13,7 @@ const ASSIGNMENT_SLUG = 'pinyin-intro'
 
 export function IntroductionToPinyinPage({ embedded = false }) {
   const { user } = useAuth()
+  const invalidateCompletions = useCompletionsInvalidate()
   const [completed, setCompleted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [statusLoading, setStatusLoading] = useState(true)
@@ -35,6 +37,7 @@ export function IntroductionToPinyinPage({ embedded = false }) {
     try {
       await api.markAssignmentComplete(ASSIGNMENT_SLUG)
       setCompleted(true)
+      invalidateCompletions()
       // Small confetti blast
       confetti({
         particleCount: 28,
@@ -58,6 +61,7 @@ export function IntroductionToPinyinPage({ embedded = false }) {
     try {
       await api.unmarkAssignmentComplete(ASSIGNMENT_SLUG)
       setCompleted(false)
+      invalidateCompletions()
     } catch (err) {
       console.error('Failed to mark not done:', err)
       setSaveError(err.message || 'Couldn’t update progress. Try again.')

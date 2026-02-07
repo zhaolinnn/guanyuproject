@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
 import { useAuth } from '../context/AuthContext'
+import { useCompletionsInvalidateKey } from '../context/CompletionsContext'
 
 function CourseProgressCircle({ completed, total, size = 44 }) {
   if (total === 0) return null
@@ -42,6 +43,7 @@ function CourseProgressCircle({ completed, total, size = 44 }) {
  */
 export function CoursesSidebar() {
   const { user } = useAuth()
+  const completionsInvalidateKey = useCompletionsInvalidateKey()
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -100,7 +102,7 @@ export function CoursesSidebar() {
       }
     }
     loadDetailsAndProgress()
-  }, [user, courses])
+  }, [user, courses, completionsInvalidateKey])
 
   return (
     <aside className="w-full md:w-72 lg:w-80 flex-shrink-0 flex flex-col border-r border-black/10 bg-white min-h-[50vh] md:min-h-[calc(100vh-5rem)]">
