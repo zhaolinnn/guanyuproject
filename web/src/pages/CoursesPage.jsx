@@ -1,26 +1,11 @@
-import { PageNavbar } from '../components/PageNavbar'
-import { CoursesSidebar } from '../components/CoursesSidebar'
 import { useAuth } from '../context/AuthContext'
 
 export function CoursesPage() {
   const { user } = useAuth()
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col">
-      <PageNavbar />
-
-      <div className="relative flex-1 flex min-h-0">
-        <CoursesSidebar />
-
-        {/* Main content: hero heading */}
-        <main
-          className="relative flex-1 min-w-0 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-8 md:py-8"
-          style={{
-            background:
-              'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4',
-          }}
-        >
-          <div className="max-w-3xl">
+    <div className="relative flex-1 min-w-0 flex flex-col justify-center px-8 md:px-12 lg:px-16 py-8 md:py-8">
+      <div className="max-w-3xl">
             {user && (
               <p className="font-rethink text-lg md:text-xl text-black/70 mb-3">
                 Welcome back, {user.name || user.username}
@@ -68,9 +53,6 @@ export function CoursesPage() {
                 Shanghai, China 上海
               </p>
             </div>
-          </div>
-          
-        </main>
       </div>
     </div>
   )

@@ -1,11 +1,12 @@
+import { Outlet } from 'react-router-dom'
 import { PageNavbar } from './PageNavbar'
 import { CoursesSidebar } from './CoursesSidebar'
 
 /**
  * Layout for course/assignment pages: navbar + courses sidebar + main content.
- * Use this to wrap assignment page content so the sidebar appears on every assignment.
+ * Used as the parent route for /courses so the sidebar stays mounted and state persists.
  */
-export function CoursesLayout({ children }) {
+export function CoursesLayout() {
   return (
     <div className="relative min-h-screen w-full flex flex-col">
       <PageNavbar />
@@ -19,7 +20,7 @@ export function CoursesLayout({ children }) {
               'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4',
           }}
         >
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
