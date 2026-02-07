@@ -51,7 +51,7 @@ export function CoursesSidebar() {
   const [courseDetails, setCourseDetails] = useState({})
   const [completedIds, setCompletedIds] = useState(new Set())
   const [sidebarFilter, setSidebarFilter] = useState('')
-  const [expandedCourseSlug, setExpandedCourseSlug] = useState(null)
+  const [expandedCourseSlugs, setExpandedCourseSlugs] = useState(() => new Set())
 
   useEffect(() => {
     async function loadCourses() {
@@ -138,7 +138,7 @@ export function CoursesSidebar() {
           ) : (
             <ul className="space-y-0.5">
               {filtered.map((course) => {
-                const isExpanded = expandedCourseSlug === course.slug
+                const isExpanded = expandedCourseSlugs.has(course.slug)
                 const assignments = courseDetails[course.slug]?.assignments ?? []
                 return (
                   <li key={course.slug} className="rounded-lg overflow-hidden">
@@ -146,7 +146,12 @@ export function CoursesSidebar() {
                       <button
                         type="button"
                         onClick={() =>
-                          setExpandedCourseSlug((s) => (s === course.slug ? null : course.slug))
+                          setExpandedCourseSlugs((prev) => {
+                            const next = new Set(prev)
+                            if (next.has(course.slug)) next.delete(course.slug)
+                            else next.add(course.slug)
+                            return next
+                          })
                         }
                         className="flex-shrink-0 p-1.5 rounded text-black/50 hover:bg-black/5 hover:text-black transition-colors"
                         aria-expanded={isExpanded}
