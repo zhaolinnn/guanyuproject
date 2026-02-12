@@ -13,7 +13,7 @@ export function CoursesLayout() {
 
       <div className="relative flex-1 flex min-h-0 overflow-hidden">
         <CoursesSidebar />
-        <main className="relative flex-1 min-w-0 overflow-y-auto flex flex-col bg-[#fffbf4]">
+        <main className="relative flex-1 min-w-0 overflow-y-auto flex flex-col bg-white">
           <Outlet />
         </main>
       </div>
