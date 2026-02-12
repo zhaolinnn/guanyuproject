@@ -105,7 +105,7 @@ export function CoursesSidebar() {
   }, [user, courses, completionsInvalidateKey])
 
   return (
-    <aside className="w-full md:w-72 lg:w-80 flex-shrink-0 flex flex-col border-r border-black/10 bg-white min-h-[50vh] md:min-h-[calc(100vh-5rem)]">
+    <aside className="w-full md:w-72 lg:w-80 flex-shrink-0 flex flex-col border-r border-black/10 bg-white md:sticky md:top-0 md:self-start md:max-h-[calc(100vh-5rem)] md:min-h-0">
       <div className="p-4 border-b border-black/10">
         <h2 className="font-rethink text-sm font-semibold text-black/80 uppercase tracking-wider">
           Courses

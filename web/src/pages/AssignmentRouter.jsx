@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { GettingStartedPage } from './assignments/GettingStartedPage'
 import { IntroductionToPinyinPage } from './assignments/IntroductionToPinyinPage'
 import { PinyinInitialsPage } from './assignments/PinyinInitialsPage'
 
@@ -9,6 +10,9 @@ import { PinyinInitialsPage } from './assignments/PinyinInitialsPage'
 export function AssignmentRouter() {
   const { courseSlug, assignmentSlug } = useParams()
 
+  if (courseSlug === 'introduction' && assignmentSlug === 'introduction-getting-started') {
+    return <GettingStartedPage embedded />
+  }
   if (courseSlug === 'pinyin' && assignmentSlug === 'pinyin-intro') {
     return <IntroductionToPinyinPage embedded />
   }

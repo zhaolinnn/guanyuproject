@@ -7,11 +7,11 @@ import { useAuth } from '../../context/AuthContext'
 import { useCompletionsInvalidate } from '../../context/CompletionsContext'
 import { api } from '../../api'
 
-import IntroContent from './content/introduction-to-pinyin.mdx'
+import GettingStartedContent from './content/getting-started.mdx'
 
-const ASSIGNMENT_SLUG = 'pinyin-intro'
+const ASSIGNMENT_SLUG = 'introduction-getting-started'
 
-export function IntroductionToPinyinPage({ embedded = false }) {
+export function GettingStartedPage({ embedded = false }) {
   const { user } = useAuth()
   const invalidateCompletions = useCompletionsInvalidate()
   const [completed, setCompleted] = useState(false)
@@ -38,7 +38,6 @@ export function IntroductionToPinyinPage({ embedded = false }) {
       await api.markAssignmentComplete(ASSIGNMENT_SLUG)
       setCompleted(true)
       invalidateCompletions()
-      // Small confetti blast
       confetti({
         particleCount: 28,
         spread: 36,
@@ -75,7 +74,7 @@ export function IntroductionToPinyinPage({ embedded = false }) {
       <div className="max-w-3xl mx-auto">
         <div className="flex flex-col items-center justify-center min-h-[50vh]">
           <div className="w-full max-w-xl">
-            <MdxContent><IntroContent /></MdxContent>
+            <MdxContent><GettingStartedContent /></MdxContent>
           </div>
 
           <div className="mt-10">
@@ -96,7 +95,7 @@ export function IntroductionToPinyinPage({ embedded = false }) {
                   onClick={completed ? handleMarkNotDone : handleMarkDone}
                   disabled={loading}
                   className="inline-block px-5 py-2.5 rounded-lg font-rethink text-sm text-white transition-all duration-200 hover:scale-105 hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
-                  style={{ backgroundColor: completed ? 'rgba(0, 168, 107, 0.9)' : 'rgba(0, 168, 107, 0.9)' }}
+                  style={{ backgroundColor: 'rgba(0, 168, 107, 0.9)' }}
                 >
                   {completed ? 'Lesson Completed' : 'Mark This Assignment Complete'}
                 </button>

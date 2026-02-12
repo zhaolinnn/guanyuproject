@@ -8,18 +8,12 @@ import { CoursesSidebar } from './CoursesSidebar'
  */
 export function CoursesLayout() {
   return (
-    <div className="relative min-h-screen w-full flex flex-col">
+    <div className="relative h-screen w-full flex flex-col overflow-hidden">
       <PageNavbar />
 
-      <div className="relative flex-1 flex min-h-0">
+      <div className="relative flex-1 flex min-h-0 overflow-hidden">
         <CoursesSidebar />
-        <main
-          className="relative flex-1 min-w-0 overflow-y-auto flex flex-col"
-          style={{
-            background:
-              'radial-gradient(at 50% 11%, #d4f5d4 0px, transparent 70%), #fffbf4',
-          }}
-        >
+        <main className="relative flex-1 min-w-0 overflow-y-auto flex flex-col bg-[#fffbf4]">
           <Outlet />
         </main>
       </div>
